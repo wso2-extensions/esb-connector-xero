@@ -1,0 +1,63 @@
+<template name="postPayRuns" xmlns="http://ws.apache.org/ns/synapse">
+    <!--
+     ~  Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+     ~
+     ~  WSO2 Inc. licenses this file to you under the Apache License,
+     ~  Version 2.0 (the "License"); you may not use this file except
+     ~  in compliance with the License.
+     ~  You may obtain a copy of the License at
+     ~
+     ~    http://www.apache.org/licenses/LICENSE-2.0
+     ~
+     ~  Unless required by applicable law or agreed to in writing,
+     ~  software distributed under the License is distributed on an
+     ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     ~  KIND, either express or implied.  See the License for the
+     ~  specific language governing permissions and limitations
+     ~  under the License.
+    -->
+    <parameter name="payRuns"
+               description="One or more PayRun objects can be sent through this paramater."/>
+
+    <sequence>
+        <!-- payRuns parameter accepts multiple PayRun objects -->
+        <property name="uri.var.payRuns" expression="$func:payRuns"/>
+        <property name="uri.var.uriAppender" value="/payruns"/>
+        <property name="uri.var.method" value="POST"/>
+        <property name="uri.var.params" value=""/>
+        <property name="uri.var.uriRemainder" value=""/>
+
+        <property name="DISABLE_CHUNKING" value="true" scope="axis2"/>
+
+        <!-- Authentication setup and call the API -->
+        <class name="org.wso2.carbon.connector.xero.auth.XeroOAuthSignpost"/>
+
+        <property name="Authorization" expression="get-property('auth')" scope="transport"
+                  type="STRING"/>
+
+        <payloadFactory media-type="xml">
+            <format>
+                <PayRuns xmlns="">
+                    $1
+                </PayRuns>
+            </format>
+            <args>
+                <arg expression="get-property('uri.var.payRuns')"/>
+            </args>
+        </payloadFactory>
+
+        <call>
+            <endpoint>
+                <http method="post"
+                      uri-template="legacy-encoding:{uri.var.apiUrl}{uri.var.uriAppender}"/>
+            </endpoint>
+        </call>
+
+        <header name="WWW-Authenticate" scope="transport" action="remove"/>
+        <header name="Vary" scope="transport" action="remove"/>
+        <header name="X-S" scope="transport" action="remove"/>
+        <header name="Cache-Control" scope="transport" action="remove"/>
+        <header name="Strict-Transport-Security" scope="transport" action="remove"/>
+
+    </sequence>
+</template>

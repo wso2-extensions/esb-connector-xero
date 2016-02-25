@@ -1,0 +1,59 @@
+<template name="init" xmlns="http://ws.apache.org/ns/synapse">
+    <!--
+     ~  Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+     ~
+     ~  WSO2 Inc. licenses this file to you under the Apache License,
+     ~  Version 2.0 (the "License"); you may not use this file except
+     ~  in compliance with the License.
+     ~  You may obtain a copy of the License at
+     ~
+     ~    http://www.apache.org/licenses/LICENSE-2.0
+     ~
+     ~  Unless required by applicable law or agreed to in writing,
+     ~  software distributed under the License is distributed on an
+     ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     ~  KIND, either express or implied.  See the License for the
+     ~  specific language governing permissions and limitations
+     ~  under the License.
+    -->
+    <parameter name="apiUrl" description="The apiUrl of xero."/>
+    <parameter name="consumerKey" description="The consumerKey of xero."/>
+    <parameter name="consumerSecret" description="The consumerSecret of xero."/>
+    <parameter name="accessToken" description="The accessToken of xero."/>
+    <parameter name="accessTokenSecret" description="The accessTokenSecret of xero."/>
+    <parameter name="acceptType" description="Required response type to be returned."/>
+
+    <sequence>
+
+        <property name="uri.var.apiUrl" expression="$func:apiUrl"/>
+        <property name="uri.var.contentType" value="application/xml"/>
+        <property name="uri.var.consumerKey" expression="$func:consumerKey"/>
+        <property name="uri.var.consumerSecret" expression="$func:consumerSecret"/>
+        <property name="uri.var.accessToken" expression="$func:accessToken"/>
+        <property name="uri.var.accessTokenSecret" expression="$func:accessTokenSecret"/>
+        <property name="uri.var.acceptType" expression="$func:acceptType"/>
+
+        <!-- If the apiUrl is not specified, set the default value as https://api.xero.com -->
+        <filter source="boolean(get-property('uri.var.apiUrl'))" regex="false">
+            <then>
+                <property name="uri.var.apiUrl" value="https://api.xero.com/payroll.xro/1.0"/>
+            </then>
+            <else>
+                <property name="uri.var.apiUrl"
+                          expression="fn:concat(get-property('uri.var.apiUrl'),'/payroll.xro/1.0')"/>
+            </else>
+        </filter>
+
+        <!-- If the accept type is not specified, set the default value as text/xml -->
+        <filter source="boolean(get-property('uri.var.acceptType'))" regex="false">
+            <then>
+                <property name="Accept" value="text/xml" scope="transport" type="STRING"/>
+            </then>
+            <else>
+                <property name="Accept" expression="get-property('uri.var.acceptType')"
+                          scope="transport" type="STRING"/>
+            </else>
+        </filter>
+
+    </sequence>
+</template>

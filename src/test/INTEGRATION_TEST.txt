@@ -10,16 +10,16 @@ Pre-requisites:
 Tested Platform: 
 
  - Microsoft WINDOWS V-7
- - UBUNTU 13.04
+ - UBUNTU 13.04, 14.04
  - Mac OSx 10.9
- - WSO2 ESB 4.8.1
+ - WSO2 ESB 4.8.1, 5.0.0-BETA
 
 Note:
 	This test suite can be executed by setting up a new Xero account and following all the instruction given below in step 4.
 
 Steps to follow in setting integration test.
 
- 1. Download ESB 4.9.0 by following the URL: https://svn.wso2.org/repos/wso2/scratch/ESB/
+ 1. Download ESB 5.0.0-BETA and -XX:-UseSplitVerifier" under $JVM_MEM_OPTS into {ESB_HOME}/bin/wso2server.sh".
 
  2. The ESB should be configured as below;
 	i)  Please make sure that the below mentioned Axis configurations are enabled (/repository/conf/axis2/axis2.xml).
@@ -30,7 +30,7 @@ Steps to follow in setting integration test.
 
  	ii) Deploy relevant patches, if applicable.
 
- 3. Compress modified ESB as wso2esb-4.9.0.zip and copy that zip file in to location "<CONNECTOR_HOME>/repository/".
+ 3. Compress modified ESB as wso2esb5.0.0-BETA.zip and copy that zip file in to location "<CONNECTOR_HOME>/repository/".
 
  4. Create a Xero trial account and derive the Consumer Key and Consumer Secret.
 	i) 		Using the URL "https://www.xero.com/signup/" create a Xero trial account setting the Business Location as 'United States'.

@@ -47,7 +47,7 @@ public class XeroConnectorIntegrationTest extends ConnectorIntegrationTestBase {
      */
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
-        init("xero-connector-1.0.1-SNAPSHOT");
+        init("xero-connector-1.0.1");
 
         esbRequestHeadersMap.put("Accept-Charset", "UTF-8");
         esbRequestHeadersMap.put("Content-Type", "application/xml");
@@ -58,7 +58,8 @@ public class XeroConnectorIntegrationTest extends ConnectorIntegrationTestBase {
     /**
      * Positive test case for postEmployees method with optional parameters.
      */
-    @Test(priority = 1, groups = {"wso2.esb"}, description = "xero {postEmployees} integration test with optional parameters.")
+    @Test(priority = 1, groups = {"wso2.esb"}, description = "xero {postEmployees} integration test with optional" +
+                                                             " parameters.")
     public void testPostEmployeesWithOptionalParameters() throws Exception {
 
         esbRequestHeadersMap.put("Action", "urn:postEmployees");
@@ -86,7 +87,8 @@ public class XeroConnectorIntegrationTest extends ConnectorIntegrationTestBase {
     /**
      * Negative test case for postEmployees.
      */
-    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testPostEmployeesWithOptionalParameters"}, description = "xero {postEmployees} integration test with negative case.")
+    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testPostEmployeesWithOptionalParameters"},
+            description = "xero {postEmployees} integration test with negative case.")
     public void testPostEmployeesWithNegativeCase() throws Exception {
 
         esbRequestHeadersMap.put("Action", "urn:postEmployees");
@@ -112,7 +114,8 @@ public class XeroConnectorIntegrationTest extends ConnectorIntegrationTestBase {
     /**
      * Positive test case for getEmployee method with mandatory parameters.
      */
-    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testPostEmployeesWithNegativeCase"}, description = "xero {getEmployee} integration test with mandatory parameters.")
+    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testPostEmployeesWithNegativeCase"},
+            description = "xero {getEmployee} integration test with mandatory parameters.")
     public void testGetEmployeeWithMandatoryParameters() throws Exception {
 
         esbRequestHeadersMap.put("Action", "urn:getEmployee");
@@ -137,7 +140,8 @@ public class XeroConnectorIntegrationTest extends ConnectorIntegrationTestBase {
     /**
      * Positive test case for getEmployee method with optional parameters.
      */
-    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testGetEmployeeWithMandatoryParameters"}, description = "xero {getEmployee} integration test with optional parameters.")
+    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testGetEmployeeWithMandatoryParameters"},
+            description = "xero {getEmployee} integration test with optional parameters.")
     public void testGetEmployeeWithOptionalParameters() throws Exception {
 
         esbRequestHeadersMap.put("Action", "urn:getEmployee");
@@ -164,7 +168,8 @@ public class XeroConnectorIntegrationTest extends ConnectorIntegrationTestBase {
     /**
      * Negative test case for getEmployee.
      */
-    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testGetEmployeeWithOptionalParameters"}, description = "xero {getEmployee} integration test with negative case.")
+    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testGetEmployeeWithOptionalParameters"},
+            description = "xero {getEmployee} integration test with negative case.")
     public void testGetEmployeeWithNegativeCase() throws Exception {
 
         esbRequestHeadersMap.put("Action", "urn:getEmployee");
@@ -187,7 +192,8 @@ public class XeroConnectorIntegrationTest extends ConnectorIntegrationTestBase {
     /**
      * Positive test case for getPayItems method with mandatory parameters.
      */
-    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testGetEmployeeWithNegativeCase"}, description = "xero {getPayItems} integration test with mandatory parameters.")
+    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testGetEmployeeWithNegativeCase"},
+            description = "xero {getPayItems} integration test with mandatory parameters.")
     public void testGetPeyItemsWithMandatoryParameters() throws Exception {
 
         esbRequestHeadersMap.put("Action", "urn:getPayItems");
@@ -212,14 +218,17 @@ public class XeroConnectorIntegrationTest extends ConnectorIntegrationTestBase {
     /**
      * Positive test case for getPayItems method with optional parameters.
      */
-    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testGetPeyItemsWithMandatoryParameters"}, description = "xero {getPayItems} integration test with optional parameters.")
+    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testGetPeyItemsWithMandatoryParameters"},
+            description = "xero {getPayItems} integration test with optional parameters.")
     public void testGetPayItemsWithOptionalParameters() throws Exception {
 
         esbRequestHeadersMap.put("Action", "urn:getPayItems");
 
         final RestResponse<OMElement> esbRestResponse =
                 sendXmlRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getPayItems_optional.xml");
-        final String payStubsEarningsTypeID = getValueByExpression("//EarningsType[EarningsType='Regular Hours']/EarningsRateID", esbRestResponse.getBody());
+        final String payStubsEarningsTypeID =
+                getValueByExpression("//EarningsType[EarningsType='Regular Hours']/EarningsRateID"
+                        , esbRestResponse.getBody());
         connectorProperties.setProperty("payStubsEarningsTypeID", payStubsEarningsTypeID);
 
         final String apiEndPoint =
@@ -240,7 +249,8 @@ public class XeroConnectorIntegrationTest extends ConnectorIntegrationTestBase {
     /**
      * Positive test case for getPaySchedules method with mandatory parameters.
      */
-    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testGetPayItemsWithOptionalParameters"}, description = "xero {getPaySchedules} integration test with mandatory parameters.")
+    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testGetPayItemsWithOptionalParameters"},
+            description = "xero {getPaySchedules} integration test with mandatory parameters.")
     public void testGetPaySchedulesWithMandatoryParameters() throws Exception {
 
         esbRequestHeadersMap.put("Action", "urn:getPaySchedules");
@@ -265,7 +275,8 @@ public class XeroConnectorIntegrationTest extends ConnectorIntegrationTestBase {
     /**
      * Positive test case for getPaySchedules method with optional parameters.
      */
-    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testGetPaySchedulesWithMandatoryParameters"}, description = "xero {getPaySchedules} integration test with optional parameters.")
+    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testGetPaySchedulesWithMandatoryParameters"},
+            description = "xero {getPaySchedules} integration test with optional parameters.")
     public void testGetPaySchedulesWithOptionalParameters() throws Exception {
 
         esbRequestHeadersMap.put("Action", "urn:getPaySchedules");
@@ -274,7 +285,8 @@ public class XeroConnectorIntegrationTest extends ConnectorIntegrationTestBase {
                 sendXmlRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getPaySchedules_optional.xml");
 
         final String apiEndPoint =
-                connectorProperties.getProperty("apiUrl") + "/payroll.xro/1.0/PaySchedules/" + connectorProperties.getProperty("payScheduleId");
+                connectorProperties.getProperty("apiUrl") + "/payroll.xro/1.0/PaySchedules/"
+                + connectorProperties.getProperty("payScheduleId");
         final String OAuthHeader = getOAuthHeader("GET", apiEndPoint);
         apiRequestHeadersMap.put("Authorization", OAuthHeader);
 
@@ -291,7 +303,8 @@ public class XeroConnectorIntegrationTest extends ConnectorIntegrationTestBase {
     /**
      * Negative test case for getPaySchedules.
      */
-    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testGetPaySchedulesWithOptionalParameters"}, description = "xero {getPaySchedules} integration test with negative case.")
+    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testGetPaySchedulesWithOptionalParameters"},
+            description = "xero {getPaySchedules} integration test with negative case.")
     public void testGetPaySchedulesWithNegativeCase() throws Exception {
 
         esbRequestHeadersMap.put("Action", "urn:getPaySchedules");
@@ -314,7 +327,8 @@ public class XeroConnectorIntegrationTest extends ConnectorIntegrationTestBase {
     /**
      * Positive test case for postPayRuns method with optional parameters.
      */
-    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testGetPaySchedulesWithNegativeCase"}, description = "xero {postPayRuns} integration test with optional parameters.")
+    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testGetPaySchedulesWithNegativeCase"},
+            description = "xero {postPayRuns} integration test with optional parameters.")
     public void testPostPayRunsWithOptionalParameters() throws Exception {
 
         esbRequestHeadersMap.put("Action", "urn:postPayRuns");
@@ -341,7 +355,8 @@ public class XeroConnectorIntegrationTest extends ConnectorIntegrationTestBase {
     /**
      * Positive test case for getPayRuns method with mandatory parameters.
      */
-    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testPostPayRunsWithOptionalParameters"}, description = "xero {getPayRuns} integration test with mandatory parameters.")
+    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testPostPayRunsWithOptionalParameters"},
+            description = "xero {getPayRuns} integration test with mandatory parameters.")
     public void testGetPayRunsWithMandatoryParameters() throws Exception {
 
         esbRequestHeadersMap.put("Action", "urn:getPayRuns");
@@ -366,7 +381,8 @@ public class XeroConnectorIntegrationTest extends ConnectorIntegrationTestBase {
     /**
      * Positive test case for getPayRuns method with optional parameters.
      */
-    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testGetPayRunsWithMandatoryParameters"}, description = "xero {getPayRuns} integration test with optional parameters.")
+    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testGetPayRunsWithMandatoryParameters"},
+            description = "xero {getPayRuns} integration test with optional parameters.")
     public void testGetPayRunsWithOptionalParameters() throws Exception {
 
         esbRequestHeadersMap.put("Action", "urn:getPayRuns");
@@ -375,14 +391,17 @@ public class XeroConnectorIntegrationTest extends ConnectorIntegrationTestBase {
                 sendXmlRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getPayRuns_optional.xml");
 
         final String apiEndPoint =
-                connectorProperties.getProperty("apiUrl") + "/payroll.xro/1.0/payruns/" + connectorProperties.getProperty("payRunId");
+                connectorProperties.getProperty("apiUrl") + "/payroll.xro/1.0/payruns/"
+                + connectorProperties.getProperty("payRunId");
         final String OAuthHeader = getOAuthHeader("GET", apiEndPoint);
         apiRequestHeadersMap.put("Authorization", OAuthHeader);
 
 
-        final String employeeId = getValueByExpression("//PayRun[1]/Paystubs/Paystub[1]/EmployeeID", esbRestResponse.getBody());
+        final String employeeId = getValueByExpression("//PayRun[1]/Paystubs/Paystub[1]/EmployeeID"
+                , esbRestResponse.getBody());
         connectorProperties.setProperty("payStubEmployeeId", employeeId);
-        final String paystubId = getValueByExpression("//PayRun[1]/Paystubs/Paystub[1]/PaystubID", esbRestResponse.getBody());
+        final String paystubId = getValueByExpression("//PayRun[1]/Paystubs/Paystub[1]/PaystubID"
+                , esbRestResponse.getBody());
         connectorProperties.setProperty("payStubsId", paystubId);
 
         final RestResponse<OMElement> apiRestResponse = sendXmlRestRequest(apiEndPoint, "GET", apiRequestHeadersMap);
@@ -398,7 +417,8 @@ public class XeroConnectorIntegrationTest extends ConnectorIntegrationTestBase {
     /**
      * Negative test case for getPayRuns.
      */
-    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testGetPayRunsWithOptionalParameters"}, description = "xero {getPayRuns} integration test with negative case.")
+    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testGetPayRunsWithOptionalParameters"},
+            description = "xero {getPayRuns} integration test with negative case.")
     public void testGetPayRunsWithNegativeCase() throws Exception {
 
         esbRequestHeadersMap.put("Action", "urn:getPayRuns");
@@ -421,7 +441,8 @@ public class XeroConnectorIntegrationTest extends ConnectorIntegrationTestBase {
     /**
      * Positive test case for postPayStubs method with optional parameters.
      */
-    @Test(priority = 1, groups = {"wso2.esb"}, dependsOnMethods = {"testGetPayRunsWithOptionalParameters"}, description = "xero {postPayStubs} integration test with optional parameters.")
+    @Test(priority = 1, groups = {"wso2.esb"}, dependsOnMethods = {"testGetPayRunsWithOptionalParameters"},
+            description = "xero {postPayStubs} integration test with optional parameters.")
     public void testPostPayStubsWithOptionalParameters() throws Exception {
 
         esbRequestHeadersMap.put("Action", "urn:postPayStubs");
@@ -431,7 +452,8 @@ public class XeroConnectorIntegrationTest extends ConnectorIntegrationTestBase {
 
         Assert.assertEquals(esbRestResponse.getHttpStatusCode(), 200);
 
-        final String apiEndPoint = connectorProperties.getProperty("apiUrl") + "/payroll.xro/1.0/paystubs/" + connectorProperties.getProperty("payStubsId");
+        final String apiEndPoint = connectorProperties.getProperty("apiUrl") + "/payroll.xro/1.0/paystubs/"
+                                   + connectorProperties.getProperty("payStubsId");
         final String OAuthHeader = getOAuthHeader("GET", apiEndPoint);
         apiRequestHeadersMap.put("Authorization", OAuthHeader);
 
@@ -448,7 +470,8 @@ public class XeroConnectorIntegrationTest extends ConnectorIntegrationTestBase {
     /**
      * Positive test case for getPayStubs method with mandatory parameters.
      */
-    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testGetPayRunsWithNegativeCase"}, description = "xero {getPayStubs} integration test with mandatory parameters.")
+    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testGetPayRunsWithNegativeCase"},
+            description = "xero {getPayStubs} integration test with mandatory parameters.")
     public void testGetPayStubsWithMandatoryParameters() throws Exception {
 
         esbRequestHeadersMap.put("Action", "urn:getPayStubs");
@@ -456,7 +479,8 @@ public class XeroConnectorIntegrationTest extends ConnectorIntegrationTestBase {
         final RestResponse<OMElement> esbRestResponse =
                 sendXmlRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getPayStubs_mandatory.xml");
 
-        final String apiEndPoint = connectorProperties.getProperty("apiUrl") + "/payroll.xro/1.0/paystubs/" + connectorProperties.getProperty("payStubsId");
+        final String apiEndPoint = connectorProperties.getProperty("apiUrl") + "/payroll.xro/1.0/paystubs/"
+                                   + connectorProperties.getProperty("payStubsId");
         final String OAuthHeader = getOAuthHeader("GET", apiEndPoint);
         apiRequestHeadersMap.put("Authorization", OAuthHeader);
 
@@ -475,7 +499,8 @@ public class XeroConnectorIntegrationTest extends ConnectorIntegrationTestBase {
     /**
      * Negative test case for getPayStubs.
      */
-    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testGetPayRunsWithOptionalParameters"}, description = "xero {getPayStubs} integration test with negative case.")
+    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testGetPayRunsWithOptionalParameters"},
+            description = "xero {getPayStubs} integration test with negative case.")
     public void testGetPayStubsWithNegativeCase() throws Exception {
 
         esbRequestHeadersMap.put("Action", "urn:getPayStubs");
